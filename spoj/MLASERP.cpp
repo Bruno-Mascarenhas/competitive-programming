@@ -1,69 +1,74 @@
 #include <bits/stdc++.h>
-
-#define st first
-#define nd second
+using namespace std;
+#define int long long
+#define pi 3.1415926535897932384626
 #define pb push_back
 #define pf push_front
-typedef std::pair<int, int> pii;
-typedef std::pair<int, pii> piii;
-int dirI[]  = {0, 1, 0, -1};
-int dirJ[]  = {1, 0, -1, 0};
+#define ff first
+#define ss second
+#define debug(x) cout << #x " = " << (x) << endl
+#define DESYNC ios_base::sync_with_stdio(false); cin.tie(0); cout.tie(0)
+#define endl '\n'
+#define ALL(x) for(int i=0; i<x; i++)
 
-const int N = 110, INF = 0x3f3f3f3f;
-int n, m, d[N][N][4];
-char grid[N][N];
-pii src, snk;
+const int dx[] = {0,1,0,-1};
+const int dy[] = {1,0,-1,0};
+typedef vector<int> vi; 
+typedef vector<vi> vvi; 
+typedef pair<int,int> pii;
+typedef vector<pii> vii;
+const int maxn = 101, INF = 0x3f3f3f3f;
+int n,m, mat[maxn][maxn][4]; char arr[maxn][maxn];
+pii start, dest;
 
-bool valid(pii pos) {
-  if (pos.st >= n || pos.st < 0) return false;
-  if (pos.nd >= m || pos.nd < 0) return false;
-  return grid[pos.st][pos.nd] != '*';
+bool valid(int a, int b){
+    if(a<m && a>=0 && b<n && b>=0)
+        if(arr[a][b]!='*')
+            return true;
+    return false;
 }
 
-void bfs01() {
-  std::deque<piii> q;
-  memset(d, INF, sizeof d);
-  for (int i = 0; i < 4; i++) {
-    d[src.st][src.nd][i] = 0;
-    q.pf({i, src});
-  }
-
-  while (!q.empty()) {
-    piii top = q.front(); q.pop_front();
-    int sense = top.st;
-    pii v = top.nd;
-
-    for (int i = 0; i < 4; i++) {
-      pii u = {v.st + dirI[i], v.nd + dirJ[i]};
-      int w = (sense != i);
-      if (valid(u) && d[v.st][v.nd][sense] + w < d[u.st][u.nd][i]) {
-        d[u.st][u.nd][i] = d[v.st][v.nd][sense] + w;
-        w ? q.pb({i, u}) : q.pf({i, u});
-      }
+void bfs(){
+    memset(mat,INF,sizeof mat);
+    deque<pair<int,pii>> q;
+    for(int i=0; i<4; i++){
+        mat[start.ff][start.ss][i] = 0;
+        q.pb({i,start});
     }
-  }
+    int value;
+    while(!q.empty()){
+        auto curr = q.front(); q.pop_front();
+        int dir = curr.ff;
+        pii from = curr.ss;
+
+        for(int i=0; i<4; i++){
+            dir == i ? value = 0 : value = 1;
+            pii to = {from.ff+dx[i],from.ss+dy[i]};
+            if(valid(from.ff,from.ss) && mat[from.ff][from.ss][dir]+value < mat[to.ff][to.ss][i]){
+                mat[to.ff][to.ss][i] = mat[from.ff][from.ss][dir]+value;
+                value ? q.pb({i,to}) : q.pf({i,to});
+            }
+        }
+    }
 }
 
-int main() {
-  scanf("%d%d", &m, &n);
+int32_t main(){
+    DESYNC; bool f = 0;
+    cin>>m>>n;
+    for(int i=0; i<m; i++) 
+        for(int j=0; j<n; j++){
+            cin>>arr[i][j];
+            if(arr[i][j] == 'C'){
+                if(!f)
+                    start = {i,j}, f=1;
+                else
+                    dest = {i,j}; 
+            }   
+        }
 
-  bool flag = false;
-  for (int i = 0; i < n; i++) {
-    for (int j = 0; j < m; j++) {
-      scanf(" %c", &grid[i][j]);
-      if (grid[i][j] == 'C') {
-        if (flag) snk = {i, j};
-        else src = {i, j};
-        flag = true;
-      }
-    }
-  }
-
-  bfs01();
-  int ans = INF;
-  for (int i = 0; i < 4; i++)
-    ans = std::min(ans, d[snk.st][snk.nd][i]);
-
-  printf("%d\n", ans);
-  return 0;
+    bfs();
+    int ans = INF;
+    for(int i=0;i<4;i++)
+        ans = min(ans,mat[dest.ff][dest.ss][i]);
+    cout<<ans<<endl;
 }
