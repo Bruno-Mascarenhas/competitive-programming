@@ -23,7 +23,7 @@ int32_t main(){
         ll ans = arr[0];
         
         for(int i=0; i<n-1; i++)
-            ans = min(ans,abs(psum[i]-ssum[i]));
+            ans = min(ans,abs(psum[i]-ssum[i+1]));
 
         cout<<ans<<endl;
     }
