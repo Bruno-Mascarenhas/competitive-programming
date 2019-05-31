@@ -29,6 +29,7 @@ typedef vector<pii> vii;
 typedef __gnu_pbds::tree<int, __gnu_pbds::null_type, std::less<int>, __gnu_pbds::rb_tree_tag,__gnu_pbds::tree_order_statistics_node_update> indexed_set;
 
 inline int mod(int n){ return (n%1000000007); }
+//Compilation flags // g++ -std=c++17 -O3 -Wshadow -Wall -fsanitize=address -fsanitize=undefined -D_GLIBCXX_DEBUG -g 
 
 int gcd(int a, int b){
   if(a == 0 || b == 0) return 0;
@@ -48,8 +49,25 @@ int fpow(int x, unsigned int y, int p){
     return res; 
 } 
 
+int n, a, af, b, bf;
 int32_t main(){
+  DESYNC;
+  cin>>n;
+  cin>>a>>af;
+  cin>>b>>bf;
 
+  while(1){
+    if(a == b){
+      cout<<"YES\n";
+      return 0;
+    }
+    if(a==af || b==bf) break;
+    b--,a++;
+    if(a == n+1) a = 1;
+    if(b == 0) b = n;
+  }
+  cout<<"NO\n";
+  return 0;
 }
 
 

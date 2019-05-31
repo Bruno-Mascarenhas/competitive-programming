@@ -17,13 +17,13 @@ int32_t main(){
         }
         
         for(int i=n-1; i>=0; i--)
-            if(i<n-1) ssum[i] = ssum[i-1]+arr[i];
+            if(i<n-1) ssum[i] = ssum[i+1]+arr[i];
             else ssum[i] = arr[i];
         
         ll ans = arr[0];
-        
+
         for(int i=0; i<n-1; i++)
-            ans = min(ans,abs(psum[i]-ssum[i+1]));
+            ans = min(ans,llabs(psum[i]-ssum[i+1]));
 
         cout<<ans<<endl;
     }
