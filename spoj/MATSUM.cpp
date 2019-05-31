@@ -34,7 +34,7 @@ int main(){
             }
             else if(op == "SUM"){
                 cin>>x11>>y11>>x2>>y2;  x2++;y2++;
-                cout<<sum(x11-1,y11-1)+sum(x2,y2)-sum(x11-1,y2)-sum(x2,y11-1)<<endl;
+                cout<<sum(x11,y11)+sum(x2,y2)-sum(x11,y2)-sum(x2,y11)<<endl;
             }
         }
     }
