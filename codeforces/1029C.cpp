@@ -9,12 +9,12 @@ int32_t main(){
     cin>>n;
     for(int i=0; i<n; i++){
         cin>>x[i]>>y[i];
-        l.insert(x), r.insert(y[i]);
+        l.insert(x[i]), r.insert(y[i]);
     }
     int best = 0;
     for(int i=0; i<n; i++){
         l.erase(l.find(x[i])), r.erase(r.find(y[i]));
-        best = max(best, *(r.begin()) - *(--l.begin()));
+        best = max(best, *(r.begin()) - *(--l.end()));
         l.insert(x[i]), r.insert(y[i]);
     }
     cout<<best<<endl;

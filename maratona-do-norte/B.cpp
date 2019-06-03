@@ -14,7 +14,8 @@ using namespace std;
 #define endl '\n'
 #define EPS 1e-9
 #define INF 1e18
-#define ALL(x) for(int i=0; i<x; i++)
+#define for0(x) for(int i=0; i<x; i++)
+#define ALL(x) a.begin(),a.end()
 #define fori(a,b,c) for(int a=b; a<c; a++)
 #define PRESENT(c,x) ((c).find(x) != (c).end())
 #define m0(x) memset((x), 0, sizeof(x))
@@ -48,20 +49,13 @@ int fpow(int x, unsigned int y, int p){
     } 
     return res; 
 } 
-
-int n, m;
+ll a,b,c,d,e,ans;
 int32_t main(){
-    DESYNC;
-    cin>>n>>m;
-    vector<int> arr(n);
-    for(int &x: arr) cin>>x;
-
-    for(int i=0; i<n; i++){
-        
-    }
-
-  
-  return 0;
+  DESYNC;
+  cin>>a>>b>>c>>d>>e;
+  ans= a*300 +b*1500 + c*600 + d*1000 + e*150 + 225;
+  cout<<ans<<endl;
 }
+
 
 
