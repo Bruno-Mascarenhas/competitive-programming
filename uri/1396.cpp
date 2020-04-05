@@ -14,7 +14,7 @@ int main(){
             sorted = 0;
             for(int i=0; i<n-1;i++){
                 dist = 0; best = arr[i]; bestpos = -1; sorted=0;
-                for(int j=0; j<n-1; j++){
+                for(int j=i; j<n-1; j++){
                     dist++;
                     if(arr[j]>arr[j+1] && dist <= k && arr[j+1] < best)
                         bestpos=j+1,best = arr[j+1];
@@ -22,7 +22,7 @@ int main(){
                 if(bestpos!=-1){
                     sorted = 1;
                     for(int j=bestpos; j>i; j--) swap(arr[j],arr[j-1]);
-                    k-=dist;
+                    k-=(bestpos-i);
                 }
             }
         }

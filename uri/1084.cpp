@@ -3,6 +3,7 @@ using namespace std;
 #define int long long
 const int N = 3e5+10;
 int x[N], y[N], n;
+
 int32_t main(){
     ios_base::sync_with_stdio(0);cin.tie(0);cout.tie(0);
     multiset<int> l, r;

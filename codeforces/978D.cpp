@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
-using namespace std; using namespace __gnu_pbds;
-#define ll long long
+using namespace std;
+#define int long long
 #define bit(x,i) (x&(1<<i))
 #define pi 3.1415926535897932384626
 #define pb push_back
@@ -9,12 +9,13 @@ using namespace std; using namespace __gnu_pbds;
 #define mt make_tuple
 #define ff first
 #define ss second
-#define debug(x) cout << #x " = " << (x) << endl
+#define debug(x) cout << #x " = " << (x) << " "
 #define DESYNC ios_base::sync_with_stdio(false); cin.tie(0); cout.tie(0)
 #define endl '\n'
 #define EPS 1e-9
 #define INF 1e18
-#define ALL(x) for(int i=0; i<x; i++)
+#define for0(x) for(int i=0; i<x; i++)
+#define ALL(x) a.begin(),a.end()
 #define fori(a,b,c) for(int a=b; a<c; a++)
 #define PRESENT(c,x) ((c).find(x) != (c).end())
 #define m0(x) memset((x), 0, sizeof(x))
@@ -26,9 +27,10 @@ typedef vector<int> vi;
 typedef vector<vi> vvi; 
 typedef pair<int,int> pii;
 typedef vector<pii> vii;
-typedef tree<int,null_type,less<int>,rb_tree_tag,tree_order_statistics_node_update> indexed_set;
+typedef __gnu_pbds::tree<int, __gnu_pbds::null_type, std::less<int>, __gnu_pbds::rb_tree_tag,__gnu_pbds::tree_order_statistics_node_update> indexed_set;
 
 inline int mod(int n){ return (n%1000000007); }
+//Compilation flags // g++ -std=c++17 -O3 -Wshadow -Wall -fsanitize=address -fsanitize=undefined -D_GLIBCXX_DEBUG -g 
 
 int gcd(int a, int b){
   if(a == 0 || b == 0) return 0;
@@ -49,8 +51,32 @@ int fpow(int x, unsigned int y, int p){
 } 
 
 int32_t main(){
+  DESYNC;
+  int n,r,cur,cnt, ans = INF, ai;
+  bool ok;
+  cin>>n;
 
+  vector<int> arr(n), diff;
+  for(int &x: arr) cin>>x;
 
+  if(n<=2) 
+    return cout<<0<<endl, 0;
+
+  for(int i=-1; i<=1; i++)
+    for(int j=-1; j<=1; j++){
+      r = (arr[1]+j) - (arr[0]+i);
+      ok = true;
+      cnt=abs(i)+abs(j);
+      for(int k=2; k<n; k++){
+        ai = arr[0]+i+r*(k);
+        cur = abs(ai - arr[k]);
+        if(cur > 1)
+          ok = false;
+        else if(cur > 0) 
+          cnt++;
+      }
+      if(ok)
+        ans = min(ans,cnt);
+    }
+  ans<INF ? cout<<ans<<endl : cout<<-1<<endl;
 }
-
-
