@@ -2,3 +2,5 @@
 *.out
 *.env
 *.pdf
+*.o 
+*.pyc
