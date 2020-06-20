@@ -14,8 +14,7 @@ using namespace std;
 #define endl '\n'
 #define EPS 1e-9
 #define INF 1e18
-#define for0(x) for(int i=0; i<x; i++)
-#define ALL(x) a.begin(),a.end()
+#define ALL(x) for(int i=0; i<x; i++)
 #define fori(a,b,c) for(int a=b; a<c; a++)
 #define PRESENT(c,x) ((c).find(x) != (c).end())
 #define m0(x) memset((x), 0, sizeof(x))
@@ -31,40 +30,52 @@ typedef __gnu_pbds::tree<int, __gnu_pbds::null_type, std::less<int>, __gnu_pbds:
 
 inline int mod(int n){ return (n%1000000007); }
 
-vector<vector<int>> graph;
-vector<int> vis, comp;
+int gcd(int a, int b){
+  if(a == 0 || b == 0) return 0;
+  if(b == 1) return b;
+  else return gcd(b, a%b);
+}
 
-void dfs(int u){
-  vis[u] = 1;
-  comp.push_back(u);
-  for(int to: graph[u])
-    if(!vis[to]) 
-      dfs(to);
+int fpow(int x, unsigned int y, int p){ 
+    int res = 1;
+    x = x % p;
+    while (y > 0){
+        if (y & 1) 
+            res = (res*x) % p; 
+        y = y>>1;
+        x = (x*x) % p;   
+    } 
+    return res; 
+} 
+const int maxn = 1e5+10;
+
+void testcase(){
+    int len,p,tmp;
+    string s;
+    cin>>len>>p>>s;
+    vector<int> ans(26,0), psum(len);
+
+    for(int i=0; i<p ;i++){
+        cin>>tmp;
+        psum[tmp-1]++;
+    }
+
+    for(int i=len-1; i>0; i--)
+        psum[i-1] += psum[i];
+    
+    for(int i=0; i<len; i++)
+        ans[s[i]-'a'] += psum[i]+1;
+    
+    for(int i=0; i<26; i++) cout<<ans[i]<<" ";
+    cout<<endl;
 }
 
 int32_t main(){
-  DESYNC;
-  int n, m, x, y;
-  cin>>n>>m;
-  graph.assign(n,vector<int>());
-  vis.assign(n,0);
-
-  for(int i=0; i<m; i++){
-    cin>>x>>y;
-    x--, y--;
-    graph[x].pb(y);
-    graph[y].pb(x);
-  }
-
-  int ans=0;
-  for(int i=0; i<n; i++)
-    if(!vis[i]){
-      bool ok = true;
-      dfs(i);
-      for(int el: comp) ok &= graph[el].size() == 2;
-      if(ok) ans++;
-      comp.clear();
+	DESYNC;
+    int t;
+    cin>>t;
+    while(t--){
+        testcase();
     }
-
-  cout<<ans<<endl;
+    
 }

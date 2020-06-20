@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
 using namespace std;
-#define int long long
+#define ll long long
 #define bit(x,i) (x&(1<<i))
 #define pi 3.1415926535897932384626
 #define pb push_back
@@ -14,8 +14,7 @@ using namespace std;
 #define endl '\n'
 #define EPS 1e-9
 #define INF 1e18
-#define for0(x) for(int i=0; i<x; i++)
-#define ALL(x) a.begin(),a.end()
+#define ALL(x) for(int i=0; i<x; i++)
 #define fori(a,b,c) for(int a=b; a<c; a++)
 #define PRESENT(c,x) ((c).find(x) != (c).end())
 #define m0(x) memset((x), 0, sizeof(x))
@@ -31,28 +30,52 @@ typedef __gnu_pbds::tree<int, __gnu_pbds::null_type, std::less<int>, __gnu_pbds:
 
 inline int mod(int n){ return (n%1000000007); }
 
-int32_t main(){
-  DESYNC;
-  int n;
-  cin>>n;
-  vector<int> arr(n),nxt(n),vis(n,0);
-  for(int &x: arr)cin>>x;
+int gcd(int a, int b){
+  if(a == 0 || b == 0) return 0;
+  if(b == 1) return b;
+  else return gcd(b, a%b);
+}
 
-  for(int i=0; i<n; i++)
-    for(int j=0; j<n; j++){
-      if(arr[i]%3 == 0 && arr[i]/3 == arr[j])
-        nxt[i] = j, vis[j] = 1;
-      else if(arr[i]*2 == arr[j])
-        nxt[i] = j, vis[j] = 1;
+int fpow(int x, unsigned int y, int p){ 
+    int res = 1;
+    x = x % p;
+    while (y > 0){
+        if (y & 1) 
+            res = (res*x) % p; 
+        y = y>>1;
+        x = (x*x) % p;   
+    } 
+    return res; 
+} 
+const int maxn = 1e5+10;
+
+void testcase(){
+    int n,x;
+    bool ok = false;
+    cin>>n;
+    vector<int> freq(n+20,0), arr(n+10);
+
+    for(int i=0; i<n; i++){
+        cin>>x;
+        arr[i] = x;
+        freq[x]++;
+
+        if(freq[x]>1 && i>0 && arr[i-1]!=x)
+            ok = true;
+        
+
+        if(freq[x]>=3)
+            ok = true;
     }
 
-  int cur=0;
-  for(int i=0; i<n; i++)
-    if(!vis[i])
-      cur = i;
-  
-  for(int i=0; i<n; i++){
-    cout<<arr[cur]<<(i+1==n ?"\n":" ");
-    cur = nxt[cur];
-  }
+    puts(ok?"YES":"NO");
+}
+
+int32_t main(){
+	DESYNC;
+    int T;
+    cin>>T;
+    while(T--){
+        testcase();
+    }
 }

@@ -14,8 +14,7 @@ using namespace std;
 #define endl '\n'
 #define EPS 1e-9
 #define INF 1e18
-#define for0(x) for(int i=0; i<x; i++)
-#define ALL(x) a.begin(),a.end()
+#define ALL(x) for(int i=0; i<x; i++)
 #define fori(a,b,c) for(int a=b; a<c; a++)
 #define PRESENT(c,x) ((c).find(x) != (c).end())
 #define m0(x) memset((x), 0, sizeof(x))
@@ -31,20 +30,50 @@ typedef __gnu_pbds::tree<int, __gnu_pbds::null_type, std::less<int>, __gnu_pbds:
 
 inline int mod(int n){ return (n%1000000007); }
 
+int gcd(int a, int b){
+  if(a == 0 || b == 0) return 0;
+  if(b == 1) return b;
+  else return gcd(b, a%b);
+}
+
+int fpow(int x, unsigned int y, int p){ 
+    int res = 1;
+    x = x % p;
+    while (y > 0){
+        if (y & 1) 
+            res = (res*x) % p; 
+        y = y>>1;
+        x = (x*x) % p;   
+    } 
+    return res; 
+} 
+const int maxn = 1e5+10;
+
+void testcase(){
+    int n, freq[2] = {0,0}, odd = 0, ans=0, tmp = 0;
+    cin>>n;
+    vector<int> arr(n);
+    for(int i=0; i<n; i++){
+        cin>>arr[i];
+        freq[arr[i]%2]++;
+        odd += (i%2);
+        if(i%2 != arr[i]%2) tmp++;
+    }
+
+    if(freq[1] != odd){
+        //debug(odd);debug(freq[1]);
+        cout<<"-1"<<endl;
+        return;
+    } else {
+        cout<<tmp/2<<endl;
+    }
+}
+
 int32_t main(){
-    DESYNC;
-    int n; string s;
-    cin>>n>>s;
-
-    map<string,int> freq;
-
-    for(int i=0; i<n-1; i++)
-        freq[s.substr(i,2)]++;
-
-    pair<int, string> ans;
-
-    for(auto it: freq)
-        ans = max(ans,{it.ss,it.ff});
-
-    cout<<ans.ss<<endl;
+	DESYNC;
+    int T;
+    cin>>T;
+    while(T--){
+        testcase();
+    }
 }

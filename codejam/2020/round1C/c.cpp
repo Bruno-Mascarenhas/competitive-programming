@@ -50,37 +50,17 @@ int fpow(int x, unsigned int y, int p){
     return res; 
 } 
 
-ll pascal[36][36];
-
-void triangle(){
-    for(int line=0; line<36; line++){
-        for(int i=0; i<=line; i++)
-            if(line == i || i == 0)
-                pascal[line][i] = 1;
-            else
-                pascal[line][i] = pascal[line-1][i-1] + pascal[line-1][i];
-    }
-}
-
-int walk(){
-
-}
-
 void test_case(){
-    int n;
-    cin>>n;
-
-    //cout<<walk(n)<<endl;
-    return;
+    cout<<2<<endl;
 }
 
 int32_t main(){
     DESYNC;
     int T;
     cin>>T;
-    triangle();
     fori(t,1,T+1) {
         cout<<"Case #"<<t<<": ";
         test_case();
     }
+
 }

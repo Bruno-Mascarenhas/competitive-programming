@@ -51,8 +51,21 @@ int fpow(int x, unsigned int y, int p){
 } 
 
 void test_case(){
-
-
+    int n;
+    cin>>n;
+    string ans, aux;
+    bool valid = 1;
+    for(int i=0; i<n; i++){
+        cin>>aux;
+        aux = aux.substr(1,aux.size()-1);
+        if(!i) ans = aux;
+        if(aux.size() > ans.size()) swap(aux, ans);
+        if(ans.find(aux) == string::npos){
+            valid = 0;
+        }
+    }
+    cout<<(valid?ans:"*")<<endl; 
+    return;
 }
 
 int32_t main(){

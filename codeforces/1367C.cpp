@@ -14,8 +14,7 @@ using namespace std;
 #define endl '\n'
 #define EPS 1e-9
 #define INF 1e18
-#define for0(x) for(int i=0; i<x; i++)
-#define ALL(x) a.begin(),a.end()
+#define ALL(x) for(int i=0; i<x; i++)
 #define fori(a,b,c) for(int a=b; a<c; a++)
 #define PRESENT(c,x) ((c).find(x) != (c).end())
 #define m0(x) memset((x), 0, sizeof(x))
@@ -30,7 +29,6 @@ typedef vector<pii> vii;
 typedef __gnu_pbds::tree<int, __gnu_pbds::null_type, std::less<int>, __gnu_pbds::rb_tree_tag,__gnu_pbds::tree_order_statistics_node_update> indexed_set;
 
 inline int mod(int n){ return (n%1000000007); }
-//Compilation flags // g++ -std=c++17 -O3 -Wshadow -Wall -fsanitize=address -fsanitize=undefined -D_GLIBCXX_DEBUG -g 
 
 int gcd(int a, int b){
   if(a == 0 || b == 0) return 0;
@@ -49,38 +47,36 @@ int fpow(int x, unsigned int y, int p){
     } 
     return res; 
 } 
+const int maxn = 1e5+10;
 
-ll pascal[36][36];
+void testcase(){
+    string s; int n, k, ans=0;
+    cin>>n>>k>>s;
 
-void triangle(){
-    for(int line=0; line<36; line++){
-        for(int i=0; i<=line; i++)
-            if(line == i || i == 0)
-                pascal[line][i] = 1;
-            else
-                pascal[line][i] = pascal[line-1][i-1] + pascal[line-1][i];
+    set<int> pos;
+
+    for(int i=0; i<n; i++) 
+        if(s[i] == '1')
+            pos.insert(i);
+    
+    for(int i=0; i<n; i++){
+        if(s[i] == '0'){
+            auto it = pos.lower_bound(i-k);
+            if(it == pos.end() || *it > i+k){
+                ans++;
+                pos.insert(i);
+            }
+        }
     }
-}
 
-int walk(){
-
-}
-
-void test_case(){
-    int n;
-    cin>>n;
-
-    //cout<<walk(n)<<endl;
-    return;
+    cout<<ans<<endl;
 }
 
 int32_t main(){
-    DESYNC;
+	DESYNC;
     int T;
     cin>>T;
-    triangle();
-    fori(t,1,T+1) {
-        cout<<"Case #"<<t<<": ";
-        test_case();
+    while(T--){
+        testcase();
     }
 }

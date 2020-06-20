@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
 using namespace std;
-#define int long long
+#define ll long long
 #define bit(x,i) (x&(1<<i))
 #define pi 3.1415926535897932384626
 #define pb push_back
@@ -21,20 +21,46 @@ using namespace std;
 #define m0(x) memset((x), 0, sizeof(x))
 #define m1(x) memset((x), -1, sizeof(x))
 
+const int dx[] = {0,1,0,-1};
+const int dy[] = {1,0,-1,0};
+typedef vector<int> vi; 
+typedef vector<vi> vvi; 
+typedef pair<int,int> pii;
+typedef vector<pii> vii;
+typedef __gnu_pbds::tree<int, __gnu_pbds::null_type, std::less<int>, __gnu_pbds::rb_tree_tag,__gnu_pbds::tree_order_statistics_node_update> indexed_set;
+
 inline int mod(int n){ return (n%1000000007); }
 //Compilation flags // g++ -std=c++17 -O3 -Wshadow -Wall -fsanitize=address -fsanitize=undefined -D_GLIBCXX_DEBUG -g 
 
+int gcd(int a, int b){
+  if(a == 0 || b == 0) return 0;
+  if(b == 1) return b;
+  else return gcd(b, a%b);
+}
+
+int fpow(int x, unsigned int y, int p){ 
+    int res = 1;
+    x = x % p;
+    while (y > 0){
+        if (y & 1) 
+            res = (res*x) % p; 
+        y = y>>1;
+        x = (x*x) % p;   
+    } 
+    return res; 
+} 
+
+void test_case(){
+    cout<<2<<endl;
+}
+
 int32_t main(){
-  DESYNC;
-  int n, k;
-  cin>>n>>k;
-  vector<int> arr(n);
+    DESYNC;
+    int T;
+    cin>>T;
+    fori(t,1,T+1) {
+        cout<<"Case #"<<t<<": ";
+        test_case();
+    }
 
-  for(int &x: arr) cin>>x;
-
-  sort(arr.begin(), arr.end());
-
-  if(k == 0) return puts(arr[0]>1?"1":"-1"),0;
-
-  cout<<(arr[k] == arr[k-1] ? -1:arr[k-1])<<endl;
 }
