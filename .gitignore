@@ -1,4 +1,4 @@
-**/.vscode
-**/*.out
-**/.env
-**/*.pdf
+*.vscode
+*.out
+*.env
+*.pdf
