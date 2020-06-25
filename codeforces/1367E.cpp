@@ -49,29 +49,36 @@ int fpow(int x, unsigned int y, int p){
 } 
 const int maxn = 1e5+10;
 
+void testcase(){
+    int n, k; string s;
+    vector<int> freq(26,0);
+    cin>>n>>k>>s;
+
+    for(char x: s) freq[x-'a']++;
+
+    for(int cur=n; cur>=1; cur--){
+        if(k%cur == 0){
+            cout<<cur<<endl;
+            return;
+        }
+
+        int mini = __gcd(cur,k), cnt = 0;
+        int lens = cur/mini;
+
+        for(int x: freq) cnt += x/lens;
+
+        if(cnt >= mini){
+            cout<<cur<<endl;
+            return;
+        }
+    }
+}
+
 int32_t main(){
 	DESYNC;
-    int n, a, b, k, ans = 0;
-    cin>>n>>a>>b>>k;
-    
-    vector<int> hp(n);
-
-    for(int &x: hp){
-        cin>>x;
-        
-        x %= a+b;
-        if(!x) x = a+b;
-
-        x = (x+a-1)/a - 1;
+    int T;
+    cin>>T;
+    while(T--){
+        testcase();
     }
-
-    sort(hp.begin(),hp.end());
-
-    for(int x: hp){
-        if(k - x < 0) break;
-        ans++;
-        k -= x;
-    }
-
-    cout<<ans<<endl;
 }

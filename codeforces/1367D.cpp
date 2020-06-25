@@ -50,7 +50,33 @@ int fpow(int x, unsigned int y, int p){
 const int maxn = 1e5+10;
 
 void testcase(){
+    int n;
+    string s;
+    cin>>s>>n;
+
+    vector<int> arr(n);
+    for(int &x: arr) cin>>x;
+
+    vector<int> cnt(26,0);
+    for(char x: s) cnt[x-'a']++;
+    string ans(n,'*');
     
+    for(char cur = 'z'; cur>='a'; cur--){
+        vector<int> valids;
+        for(int i=0; i<(int)arr.size(); i++){ if(arr[i] == 0){ valids.pb(i);} }
+
+        if(cnt[cur - 'a'] < (int)valids.size()) continue;
+
+        for(int x: valids) ans[x] = cur, arr[x] = -1;
+
+        for(int j: valids){
+            for(int i=0; i<(int)arr.size(); i++){
+                arr[i] -= abs(i-j);
+            }
+        }
+    }
+
+    cout<<ans<<endl;
 
 }
 

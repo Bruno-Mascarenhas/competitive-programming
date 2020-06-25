@@ -47,31 +47,31 @@ int fpow(int x, unsigned int y, int p){
     } 
     return res; 
 } 
-const int maxn = 1e5+10;
+
+int n, h, l, r, hours[2123], memo[2123][2123];
+
+int sleep(int day, int hour){
+    if(memo[day][hour] != -1)
+        return memo[day][hour];
+    if(day == n)
+        return memo[day][hour] = 0;
+    
+    int h1 = (hour + hours[day])%h;
+    int h2 = (hour + hours[day] - 1)%h;
+    
+    memo[day][hour] = max(sleep(day+1,h2) + (h2 >= l && h2 <=r), sleep(day+1,h1) + (h1 >= l && h1 <=r) );
+
+    return memo[day][hour];
+}
 
 int32_t main(){
 	DESYNC;
-    int n, a, b, k, ans = 0;
-    cin>>n>>a>>b>>k;
+    cin>>n>>h>>l>>r;
+
+    memset(memo,-1,sizeof(memo));
+
+    for(int i=0; i<n; i++)
+        cin>>hours[i];
     
-    vector<int> hp(n);
-
-    for(int &x: hp){
-        cin>>x;
-        
-        x %= a+b;
-        if(!x) x = a+b;
-
-        x = (x+a-1)/a - 1;
-    }
-
-    sort(hp.begin(),hp.end());
-
-    for(int x: hp){
-        if(k - x < 0) break;
-        ans++;
-        k -= x;
-    }
-
-    cout<<ans<<endl;
+    cout<<sleep(0,0)<<endl;
 }

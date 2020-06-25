@@ -52,5 +52,21 @@ const int maxn = 1e5+10;
 int32_t main(){
 	DESYNC;
     int n;
+    ll ans = 0LL;
     cin>>n;
+    vi a(n), b(n), diff(n);
+
+    for(int &x: a) cin>>x;
+    for(int &x: b) cin>>x;
+
+    for(int i=0; i<n; i++)  diff[i] = a[i] - b[i];
+    sort(diff.begin(),diff.end());
+
+    for(int i=0; i<n; i++){
+        if(diff[i] <= 0) continue;
+        int pos = lower_bound(diff.begin(),diff.end(),1-diff[i]) - diff.begin();
+        ans += (ll)i - pos;
+    }
+
+    cout<<ans<<endl;
 }

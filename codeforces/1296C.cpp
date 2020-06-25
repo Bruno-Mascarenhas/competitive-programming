@@ -50,6 +50,34 @@ int fpow(int x, unsigned int y, int p){
 const int maxn = 1e5+10;
 
 void testcase(){
+    int n; string s;
+    map<pii,int> vis;
+    cin>>n>>s;
+
+    int l = -1, r = n;
+
+    pii cur = {0,0};
+    vis[cur] = 0;
+
+    for(int i=0; i<n; i++){
+        if(s[i] == 'L') cur.ff -= 1;
+        if(s[i] == 'R') cur.ff += 1;
+        if(s[i] == 'U') cur.ss += 1;
+        if(s[i] == 'D') cur.ss -= 1;
+
+        if(vis.count(cur)){
+            if(i - vis[cur] + 1 < r - l + 1){
+                l = vis[cur];
+                r = i;
+            }
+        }
+        vis[cur] = i+1;
+    }
+
+    if(l >= 0)
+        cout<<l+1<<" "<<r+1<<endl;
+    else 
+        cout<<-1<<endl;
 }
 
 int32_t main(){

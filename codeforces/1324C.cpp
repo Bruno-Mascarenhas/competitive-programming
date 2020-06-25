@@ -49,44 +49,23 @@ int fpow(int x, unsigned int y, int p){
 } 
 const int maxn = 1e5+10;
 
-vector<int> graph[312345];
-int n;
-
-bool dfs(int i, vector<bool> &vis){
-    if(i == n) return true;
-    vis[i] = true;
-
-    for(int u: graph[i]){
-        if(!vis[u])
-            return dfs(u,vis);
-    }
-
-    return false;
-}
-
 void testcase(){
     string s;
     cin>>s;
-    n = s.size()+1;
+    int n = (int)s.size(), ans = 0;
+    vector<int> pos;
+    pos.push_back(0);
+    
+    for(int i=0; i<n; i++)
+        if(s[i] == 'R')
+            pos.push_back(i+1);
 
-    graph[0].pb(1);
-    for(int i=1; i<=s.size(); i++){
-        if(s[i-1] == 'L') graph[i].pb(i-1);
-        else graph[i].pb(i+1);
-    }
+    pos.push_back(n+1); //final
 
-    int i=0;
-    for(i=1; i<=s.size(); i++){
-        vector<bool> vis(n+1,0);
-        if(dfs(i,vis)){
-            cout<<i<<endl;
-            break;
-        }
-    }
+    for(int i=1; i<(int)pos.size(); i++)
+        ans = max(ans,pos[i] - pos[i-1]);
 
-    if(i > s.size()) cout<<s.size()+1<<endl;
-
-    for(int i=0; i<=n; i++) graph[i].clear();
+    cout<<ans<<endl;
 }
 
 int32_t main(){
