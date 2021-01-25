@@ -20,9 +20,9 @@ typedef long long ll;
 typedef pair<int, int> pii;
 typedef vector<int> vi;
 
-const int MOD = 1e9+7;
 const int dx[] = {0,1,0,-1};
 const int dy[] = {1,0,-1,0};
+const int MOD = 1e9+7;
 
 typedef __gnu_pbds::tree<int, __gnu_pbds::null_type, std::less<int>, __gnu_pbds::rb_tree_tag,__gnu_pbds::tree_order_statistics_node_update> indexed_set;
 
@@ -31,19 +31,20 @@ ll mod(ll x){
 	return x < 0 ? x += MOD : x;
 }
 
-int fpow(int x, unsigned int y, int p){ 
-    int res = 1;
-    x = x % p;
-    while (y > 0){
-        if (y & 1) res = (res*x) % p; 
-        y >>= 1;
-        x = (x*x) % p;   
-    } 
-    return res; 
-} 
+int a, b, n;
 
+
+const int maxn = 1e6+10;
 int32_t main() {
 	DESYNC;
 	cin.exceptions(cin.failbit);
+	cin>>n>>a>>b;
 
+	double ans = 0;
+	for(int i=max(1,a); i<=b; i++){
+		ans += n/(((a+b)/2.0)*(i+1));
+	}
+
+
+	cout<<ans<<endl;
 }

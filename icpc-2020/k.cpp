@@ -20,9 +20,9 @@ typedef long long ll;
 typedef pair<int, int> pii;
 typedef vector<int> vi;
 
-const int MOD = 1e9+7;
 const int dx[] = {0,1,0,-1};
 const int dy[] = {1,0,-1,0};
+const int MOD = 1e9+7;
 
 typedef __gnu_pbds::tree<int, __gnu_pbds::null_type, std::less<int>, __gnu_pbds::rb_tree_tag,__gnu_pbds::tree_order_statistics_node_update> indexed_set;
 
@@ -31,19 +31,54 @@ ll mod(ll x){
 	return x < 0 ? x += MOD : x;
 }
 
-int fpow(int x, unsigned int y, int p){ 
-    int res = 1;
-    x = x % p;
-    while (y > 0){
-        if (y & 1) res = (res*x) % p; 
-        y >>= 1;
-        x = (x*x) % p;   
-    } 
-    return res; 
-} 
 
 int32_t main() {
 	DESYNC;
 	cin.exceptions(cin.failbit);
+
+	int n, m;
+	vector<int> adj[101];
+	cin>>n>>m;
+	for(int i=0; i<m; i++){
+		int a, b;
+		cin>>a>>b;
+		adj[a-1].pb(b-1);
+		adj[b-1].pb(a-1);
+	}
+
+	vector<int> side(n, -1);
+	bool is_bipartite = true;
+	queue<int> q;
+	for (int st = 0; st < n; ++st) {
+		if (side[st] == -1) {
+			q.push(st);
+			side[st] = 0;
+			while (!q.empty()) {
+				int v = q.front();
+				q.pop();
+				for (int u : adj[v]) {
+					if (side[u] == -1) {
+						side[u] = side[v] ^ 1;
+						q.push(u);
+					} else {
+						is_bipartite &= side[u] != side[v];
+					}
+				}
+			}
+		}
+	}
+
+	int l = 0, r = 0;
+	for(int x: side){
+		if(x == 1) r++;
+		else l++;
+	}
+
+	//debug(l); debug(r);
+	//for(int i=0; i<n; i++) cout<<adj[i].size()<<" ";
+	//cout<<endl;
+	bool ok = ((l%2==0 && r%2==0) || (l==1 || r==1));
+
+	cout << (is_bipartite && ok ? "Y" : "N") << endl;
 
 }
